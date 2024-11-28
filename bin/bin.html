@@ -1,0 +1,117 @@
+<div class="modal fade" id="addResidentModal" tabindex="-1" role="dialog" aria-labelledby="addResidentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addResidentModalLabel">Resident Registration Form</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="includes/submit_resident.php" method="POST">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="lastName">Last Name:</label>
+                            <input type="text" class="form-control" id="lastName" name="lastName" value="<?php echo htmlspecialchars($resident['LastName']); ?>" required maxlength="25">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="firstName">First Name:</label>
+                            <input type="text" class="form-control" id="firstName" name="firstName" value="<?php echo htmlspecialchars($resident['FirstName']); ?>" required maxlength="25">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="middleName">Middle Name:</label>
+                            <input type="text" class="form-control" id="middleName" name="middleName" value="<?php echo htmlspecialchars($resident['MiddleName']); ?>" required maxlength="25">
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="age">Age:</label>
+                            <input type="number" class="form-control" id="age" name="age" value="<?php echo htmlspecialchars($resident['Age']); ?>" required maxlength="3">
+                        </div>
+                        <div class="col-md-3 form-group">
+                            <label for="gender">Gender:</label>
+                            <select class="form-control" id="gender" name="gender" required>
+                                <option value="Male" <?php echo ($resident['Gender'] == 'Male') ? 'selected' : ''; ?>>Male</option>
+                                <option value="Female" <?php echo ($resident['Gender'] == 'Female') ? 'selected' : ''; ?>>Female</option>
+                                <option value="Other" <?php echo ($resident['Gender'] == 'Other') ? 'selected' : ''; ?>>Other</option>
+                                <!-- <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option> -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="birthDate">Birth Date:</label>
+                            <input type="date" class="form-control" id="birthDate" name="birthDate" value="<?php echo htmlspecialchars($resident['BirthDate']); ?>" required>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="zone">Zone:</label>
+                            <select class="form-control" id="zone" name="zone">
+                                <option value="Male" <?php echo ($resident['Zone'] == '1') ? 'selected' : ''; ?>>Male</option>
+                                <option value="Female" <?php echo ($resident['Zone'] == '2') ? 'selected' : ''; ?>>Female</option>
+                                <option value="Other" <?php echo ($resident['Zone'] == '3') ? 'selected' : ''; ?>>Other</option>
+                                <option value="Other" <?php echo ($resident['Zone'] == '4') ? 'selected' : ''; ?>>Other</option>
+                                <!-- <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option> -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="income">Income:</label>
+                            <input type="number" class="form-control" id="income" name="income" step="0.01" value="<?php echo htmlspecialchars($resident['Income']); ?>" required maxlength="15">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="civilStatus">Civil Status:</label>
+                            <select class="form-control" id="civilStatus" name="civilStatus">
+                                <option value="Single" <?php echo ($resident['CivilStatus'] == 'Single') ? 'selected' : ''; ?>>Single</option>
+                                <option value="Married" <?php echo ($resident['CivilStatus'] == 'Married') ? 'selected' : ''; ?>>Married</option>
+                                <option value="Divorced" <?php echo ($resident['CivilStatus'] == 'Divorced') ? 'selected' : ''; ?>>Divorced</option>
+                                <option value="Widowed" <?php echo ($resident['CivilStatus'] == 'Widowed') ? 'selected' : ''; ?>>Widowed</option>
+                                <!-- <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                                <option value="Divorced">Divorced</option>
+                                <option value="Widowed">Widowed</option> -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="contactNumber">Contact Number:</label>
+                            <input type="text" class="form-control" id="contactNumber" name="contactNumber" value="<?php echo htmlspecialchars($resident['ContactNumber']); ?>" placeholder="Phone Number: 09876543210" required minlength="11" maxlength="11" pattern="\d*">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="occupation">Occupation:</label>
+                            <input type="text" class="form-control" id="occupation" name="occupation" value="<?php echo htmlspecialchars($resident['Occupation']); ?>" maxlength="25">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="voterStatus">Voter Status:</label>
+                            <select class="form-control" id="voterStatus" name="voterStatus">
+                                <option value="Registered" <?php echo ($resident['VoterStatus'] == 'Registered') ? 'selected' : ''; ?>>Registered</option>
+                                <option value="Unregistered" <?php echo ($resident['VoterStatus'] == 'Unregistered') ? 'selected' : ''; ?>>Unregistered</option>
+                                <!-- <option value="Registered">Registered</option>
+                                <option value="Unregistered">Unregistered</option> -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
