@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="resources\css\table.css">
-    <link rel="stylesheet" href="resources\css\search.css">
+    <link rel="stylesheet" href="resources/css/table.css">
+    <link rel="stylesheet" href="resources/css/search.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=search" />
 
     <title>Search</title>
@@ -14,7 +14,7 @@
 
 <body>
     <?php
-    include 'C:\xampp\htdocs\BRGY SYSTEM\assets\php\header.html';
+    include 'C:\xampp\htdocs\BRGY SYSTEM\assets\php\header.php';
     require_once 'C:\xampp\htdocs\BRGY SYSTEM\database\Database.php';
     ?>
     <div class="container-fluid mt-4">
@@ -60,7 +60,7 @@
                                                 <td style="color: <?= $items['VoterStatus'] == 'Registered' ? 'green' : 'red'; ?>;">
                                                     <?= htmlspecialchars($items['VoterStatus']) ?>
                                                 </td>
-                                                <!-- <td><?= $items['HouseholdID'] ?></td> -->
+                                                <!-- <td><?= $items['Household_id'] ?></td> -->
                                             </tr>
                                         <?php
                                         }

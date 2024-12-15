@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="resources\css\forms.css">
+<link rel="stylesheet" href="resources/css/table.css">
 
 <!-- Modal for Adding Resident -->
 <div class="modal fade" id="addResidentModal" tabindex="-1" role="dialog" aria-labelledby="addResidentModalLabel" aria-hidden="true">
@@ -11,22 +11,22 @@
 
             </div>
             <div class="modal-body">
-                <form action="includes/submit_resident.php" method="POST">
+                <form action="includes/residents/submit_resident.php" method="POST">
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label for="lastName">Last Name:</label>
-                            <input type="text" class="form-control" id="lastName" name="lastName" required maxlength="25">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required maxlength="25">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="firstName">First Name:</label>
-                            <input type="text" class="form-control" id="firstName" name="firstName" required maxlength="25">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required maxlength="25">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label for="middleName">Middle Name:</label>
-                            <input type="text" class="form-control" id="middleName" name="middleName" required maxlength="25">
+                            <label for="middle_name">Middle Name:</label>
+                            <input type="text" class="form-control" id="middle_name" name="middle_name" required maxlength="25">
                         </div>
                         <div class="col-md-3 form-group">
                             <label for="age">Age:</label>
@@ -44,8 +44,8 @@
 
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label for="birthDate">Birth Date:</label>
-                            <input type="date" class="form-control" id="birthDate" name="birthDate" required>
+                            <label for="birth_date">Birth Date:</label>
+                            <input type="date" class="form-control" id="birth_date" name="birth_date" required>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="zone">Zone:</label>
@@ -64,8 +64,8 @@
                             <input type="number" class="form-control" id="income" name="income" step="0.01" required maxlength="15">
                         </div>
                         <div class="col-md-6 form-group">
-                            <label for="civilStatus">Civil Status:</label>
-                            <select class="form-control" id="civilStatus" name="civilStatus">
+                            <label for="civil_status">Civil Status:</label>
+                            <select class="form-control" id="civil_status" name="civil_status">
                                 <option value="Single">Single</option>
                                 <option value="Married">Married</option>
                                 <option value="Divorced">Divorced</option>
@@ -76,8 +76,8 @@
 
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label for="contactNumber">Contact Number:</label>
-                            <input type="text" class="form-control" id="contactNumber" name="contactNumber" placeholder="Phone Number: 09876543210" required minlength="11" maxlength="11" pattern="\d*">
+                            <label for="contact_number">Contact Number:</label>
+                            <input type="text" class="form-control" id="contact_number" name="contact_number" placeholder="Phone Number: 09876543210" required minlength="11" maxlength="11" pattern="\d*">
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="occupation">Occupation:</label>
@@ -87,34 +87,32 @@
 
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label for="voterStatus">Voter Status:</label>
-                            <select class="form-control" id="voterStatus" name="voterStatus">
+                            <label for="voter_status">Voter Status:</label>
+                            <select class="form-control" id="voter_status" name="voter_status">
                                 <option value="Registered">Registered</option>
-                                <option value="Unregistered">Unregistered</option>
+                                <option value="Non-Voter">Unregistered</option>
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="household_id">Household:</label>
-                            <select class="form-control" id="householdID" name="householdID" required>
+                            <select class="form-control" id="household_id" name="household_id">
                                 <?php
                                 require_once 'C:\xampp\htdocs\BRGY SYSTEM\database\Household.php';
                                 $households = new Household();
                                 $households = $households->getHouseholds();
                                 if (!empty($households)): ?>
                                     <?php foreach ($households as $household): ?>
-                                        <option value="<?= htmlspecialchars($household['HouseholdID']) ?>"><?= htmlspecialchars($household['HouseholdName']) ?> Household</option>
+                                        <option value="<?= htmlspecialchars($household['household_id']) ?>"><?= htmlspecialchars($household['household_id']) ?> Household</option>
                                     <?php endforeach ?>
                                 <?php else: ?>
-                                    <option value="">None</option>
+                                    <!-- <option value="NULL">None</option> -->
                                 <?php endif; ?>
                             </select>
                         </div>
                     </div>
-
-
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
             </div>

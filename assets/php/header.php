@@ -1,10 +1,16 @@
+<?php
+session_start(); // Start the session to check login status
+?>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link rel="stylesheet" href="\resources\css\assets.css">
+<link rel="stylesheet" href="resources/css/table.css">
+<link rel="stylesheet" href="resources/css/assets.css">
+
 <header class="header">
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
       <a class="navbar-brand" href="home.php">
-        <img class = "logo" src="resources/images/Barangay.svg.png" alt="Barangay System Logo" height="40" class="p-0 m-0">
+        <img class="logo" src="resources/images/Barangay.svg.png" alt="Barangay System Logo" height="40" class="p-0 m-0">
       </a>
 
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +25,16 @@
           <li class="nav-item mr-3"><a class="nav-link" href="officials.php"><i class="fas fa-user-tie"></i> Officials</a></li>
           <b><li class="nav-item mr-5"><a class="nav-link" href="search.php"><i class="fas fa-search"></i> SEARCH</a></li></b>
         </ul>
-        <a href="login.php" class="btn btn-outline-danger ml-lg-3 mr-0"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+
+        <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
+          <!-- Display Sign Out button if the user is logged in -->
+          <a href="includes/auth/logout.php" class="btn btn-outline-danger ml-lg-3 mr-0"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+        <?php else: ?>
+          <?php header("Location: login.php"); ?>
+          <!-- Redirect to login page if the user is not logged in -->
+          <!-- <a href="login.php" class="btn btn-outline-primary ml-lg-3 mr-0"><i class="fas fa-sign-in-alt"></i> Login</a> -->
+          
+        <?php endif; ?>
       </div>
     </div>
   </nav>

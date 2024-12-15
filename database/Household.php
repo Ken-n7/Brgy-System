@@ -14,12 +14,12 @@
         }
 
         public function addHousehold($householdData){
-            $householdData['HouseholdID'] = $this->generateHouseholdID();
+            $householdData['Household_id'] = $this->generateHouseholdID();
             return Database::getInstance()->add("household_table", $householdData);
         }
 
         public function getHouseholdID($table, $id){
-            $stmt = mysqli_prepare($this->connection, "SELECT * FROM $table WHERE HouseholdID = ?");
+            $stmt = mysqli_prepare($this->connection, "SELECT * FROM $table WHERE household_id = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -30,10 +30,10 @@
         public function calculateHouseholdSizes() {
             $stmt = $this->connection->prepare("UPDATE 
                 household_table h
-                SET Household_Size = (
+                SET household_size = (
                     SELECT COUNT(*) 
                     FROM resident_table r 
-                    WHERE r.HouseholdID = h.HouseholdID
+                    WHERE r.household_id = h.household_id
                 )
             ");
             $stmt->execute();
@@ -42,10 +42,10 @@
         public function calculateHouseholdIncome(){
             $stmt = $this->connection->prepare("UPDATE 
                 household_table h
-                SET Household_Income = (
+                SET household_income = (
                     SELECT SUM(Income) 
                     FROM resident_table r 
-                    WHERE r.HouseholdID = h.HouseholdID
+                    WHERE r.household_id = h.household_id
                 )
             ");
             $stmt->execute();
@@ -61,8 +61,9 @@
         }
     
         private static function isUniqueID(int $id): bool {
+            $count = null;
             $connection = Database::getInstance()->getDB_Connection();
-            $stmt = $connection->prepare("SELECT COUNT(*) FROM resident_table WHERE HouseholdID = ?");
+            $stmt = $connection->prepare("SELECT COUNT(*) FROM resident_table WHERE Household_id = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $stmt->bind_result($count);

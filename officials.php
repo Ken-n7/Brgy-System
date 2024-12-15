@@ -1,202 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dynamic Picture Upload and Delete Profile</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding-top: 60px; /* Add space for the fixed navbar */;
-      background-color: #e7be08;
-    }
-    /* Fixed navbar on top */
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 999;
-      padding-top: 20;
-      padding-bottom: 0.5rem;
-      background-color: #343a40;
-    }
-    .navbar .navbar-brand {
-      padding-top: 15;
-      color: white;
-    }
-    .profile-card {
-      text-align: center;
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      width: 300px;
-      position: relative;
-      margin-top: 80px; /* Add margin to avoid content overlap */
-    }
-    .profile-card img {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #007bff;
-      margin-bottom: 15px;
-    }
-    .profile-info {
-      margin-top: 15px;
-      font-size: 16px;
-      color: #555;
-    }
-    .profile-info span {
-      font-weight: bold;
-      color: #333;
-    }
-    button {
-      background-color: #007bff;
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    .upload-button {
-      margin-top: 15px;
-    }
-    input[type="file"] {
-      display: none;
-    }
-    .picture-container {
-      position: relative;
-      display: inline-block;
-    }
-    .delete-btn {
-      position: absolute;
-      top: -10px;
-      right: -10px;
-      background: red;
-      color: white;
-      border-radius: 50%;
-      padding: 5px 10px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-    .delete-profile-btn {
-      background-color: #dc3545;
-      margin-top: 20px;
-    }
-    .delete-profile-btn:hover {
-      background-color: #c82333;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Management</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="resources/css/table.css">
+    <link rel="stylesheet" href="resources/css/forms.css">
 </head>
+
 <body>
-    <?php 
-        include 'C:\xampp\htdocs\BRGY SYSTEM\assets\php\header.html';
-    ?> 
-  <div class="profile-card" id="profile-card">
-    <div class="picture-container">
-      <img id="profile-picture" src="profile.jpg" alt="Person Picture">
-      <div class="delete-btn" onclick="deletePicture()">X</div>
-    </div>
-    <div class="profile-info">
-      <p><span>Name:</span> John Doe</p>
-      <p><span>Age:</span> 28</p>
-      <p><span>Address:</span> 123 Main Street, Cityville</p>
-      <p><span>Sex:</span> Male</p>
-    </div>
-    <button class="upload-button" onclick="document.getElementById('file-input').click()">Upload New Picture</button>
-    <input type="file" id="file-input" accept="image/*" onchange="uploadPicture(event)">
-    <button class="delete-profile-btn" onclick="deleteProfile()">Delete Profile</button>
-  </div>
+    <?php
+    require_once 'C:\xampp\htdocs\BRGY SYSTEM\database\Official.php';
+    require_once 'C:\xampp\htdocs\BRGY SYSTEM\database\Resident.php';
+    include 'C:\xampp\htdocs\BRGY SYSTEM\assets\php\header.php';
+    ?>
+    <div class="container-fluid mt-4">
+        <h1 class="mb-4">
+            <b>OFFICIAL LIST</b>
+            <!-- Trigger Modal for Adding Official -->
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addOfficialModal">Add Official</button>
+        </h1>
+        <div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-container">
+                        <table class="table table-striped table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Official's ID</th>
+                                    <th>Position</th>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>Middle Name</th>
+                                    <th>Term Start</th>
+                                    <th>Term End</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $officials = new Official();
+                                $officials = $officials->getOfficials();
+                                if (!empty($officials)): ?>
+                                    <p class="fas fa-users" id="total">Total Officials: <?= count($officials) ?></p>
+                                    <?php foreach ($officials as $officialData): ?>
+                                        <tr>
+                                            <td><?= htmlspecialchars($officialData['official_id']) ?></td>
+                                            <td><?= htmlspecialchars($officialData['position']) ?></td>
+                                            <td><?= htmlspecialchars($officialData['last_name']) ?></td>
+                                            <td><?= htmlspecialchars($officialData['first_name']) ?></td>
+                                            <td><?= htmlspecialchars($officialData['middle_name']) ?></td>
+                                            <td><?= htmlspecialchars($officialData['office_start_date']) ?></td>
+                                            <td><?= htmlspecialchars($officialData['office_end_date']) ?></td>
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-cog"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateOfficialModal<?= htmlspecialchars($officialData['official_id']) ?>">
+                                                                <i class="fas fa-edit" title="Update Official"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" id="delete" data-bs-toggle="modal" data-bs-target="#deleteOfficialModal<?= htmlspecialchars($officialData['official_id']) ?>">
+                                                                <i class="fas fa-trash-alt" title="Delete Official"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
 
-  <!-- Button to trigger modal -->
-  <button class="btn btn-primary mt-4" data-toggle="modal" data-target="#addOfficialModal">Add Official</button>
+                                        <!-- Delete Official Modal -->
+                                        <div class="modal fade" id="deleteOfficialModal<?= htmlspecialchars($officialData['official_id']) ?>" tabindex="-1" aria-labelledby="deleteOfficialModalLabel<?= htmlspecialchars($officialData['Official_id']) ?>" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteOfficialModal">Confirm Deletion</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to remove this official (<?=htmlspecialchars($officialData['official_id']) . ") " . htmlspecialchars($officialData['first_name']) . " " . htmlspecialchars($officialData['last_name']) ; ?>)? This action cannot be undone.
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                        <a type="button" class="btn btn-danger" href="includes/officials/remove_official.php?id=<?= htmlspecialchars($officialData['official_id']) ?>">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="addOfficialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Official</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+                                        <!-- Update Official Modal -->
+                                        <div class="modal fade" id="updateOfficialModal<?= htmlspecialchars($officialData['official_id']) ?>" tabindex="-1" aria-labelledby="updateOfficialModalLabel<?= htmlspecialchars($officialData['official_id']) ?>" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Update Official</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="includes/officials/update_official.php?id=<?= htmlspecialchars($officialData['official_id']) ?>" method="POST">
+                                                            <div class="row">
+                                                                <div class="col-md-6 form-group">
+                                                                    <label for="position">Position:</label>
+                                                                    <select class="form-control" id="position" name="position" required>
+                                                                        <option value="Barangay Captain" <?php echo $officialData['position'] == 'Barangay Captain' ? 'selected' : ''; ?>>Barangay Captain</option>
+                                                                        <option value="Barangay Kagawad" <?php echo $officialData['position'] == 'Barangay Kagawad' ? 'selected' : ''; ?>>Barangay Kagawad</option>
+                                                                        <option value="Barangay Secretary" <?php echo $officialData['position'] == 'Barangay Secretary' ? 'selected' : ''; ?>>Barangay Secretary</option>
+                                                                        <option value="Barangay Treasurer" <?php echo $officialData['position'] == 'Barangay Treasurer' ? 'selected' : ''; ?>>Barangay Treasurer</option>
+                                                                        <option value="Barangay Tanod" <?php echo $officialData['position'] == 'Barangay Tanod' ? 'selected' : ''; ?>>Barangay Tanod</option>
+                                                                        <option value="Barangay Chairperson" <?php echo $officialData['position'] == 'Barangay Chairperson' ? 'selected' : ''; ?>>Barangay Chairperson</option>
+                                                                        <option value="Barangay SK Chairperson" <?php echo $officialData['position'] == 'Barangay SK Chairperson' ? 'selected' : ''; ?>>Barangay SK Chairperson</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="col-md-6 form-group">
+                                                                    <label for="office_start_date">Term Start:</label>
+                                                                    <input type="date" class="form-control" name="office_start_date" value="<?= htmlspecialchars($officialData['office_start_date']) ?>" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end">
+                                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                                <button type="button" class="btn btn-secondary ms-2" data-bs-dismiss="modal">Cancel</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="8" class="text-center">No officials found.</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <form action="add_official.php" method="POST">
-            <div class="form-group">
-              <label for="officialid">Official's ID number</label>
-              <input type="text" class="form-control" id="officialidNumber" name="officialidNumber" placeholder="Enter ID number" required>
-            </div>
-            <div class="form-group">
-              <label for="officialFirstName">First Name</label>
-              <input type="text" class="form-control" id="officialFirstName" name="officialFirstName" placeholder="Enter first name" required>
-            </div>
-            <div class="form-group">
-              <label for="officialLastName">Last Name</label>
-              <input type="text" class="form-control" id="officialLastName" name="officialLastName" placeholder="Enter last name" required>
-            </div>
-            <div class="form-group">
-              <label for="officialPosition">Position</label>
-              <input type="text" class="form-control" id="officialPosition" name="officialPosition" placeholder="Enter position" required>
-            </div>
-            <div class="form-group">
-              <label for="officialContact">Contact Number</label>
-              <input type="text" class="form-control" id="officialContactNumber" name="officialContactNumber" placeholder="Enter contact number" required>
-            </div>
-            <div class="form-group">
-              <label for="officialTermStart">Term Start</label>
-              <input type="date" class="form-control" id="officialTermStart" name="officialTermStart" placeholder="Enter term start" required>
-            </div>
-            <div class="form-group">
-              <label for="officialTermEnd">Term End</label>
-              <input type="date" class="form-control" id="officialTermEnd" name="officialTermEnd" placeholder="Enter term end" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Official</button>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Add Official Modal -->
+    <div class="modal fade" id="addOfficialModal" tabindex="-1" aria-labelledby="addOfficialModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addOfficialModalLabel">Add Official</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="includes/officials/submit_official.php" method="POST">
+                        <div class="row">
+                            <div class="col-md-12 form-group">
+                                <label for="resident-id">Resident:</label>
+                                <select class="form-control" name="resident_id" required>
+                                    <?php
+                                    $residents = new Resident();
+                                    $residents = $residents->getResidents();
+                                    if (!empty($residents)) {
+                                        foreach ($residents as $resident) {
+                                            $resident_id = htmlspecialchars($resident['resident_id']);
+                                            $official_check = new Official();
+                                            $existingOfficial = $official_check->checkIfOfficial($resident_id);
+                                            if (!$existingOfficial) {
+                                                echo "<option value='" . htmlspecialchars($resident['resident_id']) . "'>(" . htmlspecialchars($resident['resident_id']) . ") " . htmlspecialchars($resident['first_name']) . " " . htmlspecialchars($resident['last_name']) . "</option>";
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="position">Position:</label>
+                                <select class="form-control" id="position" name="position" required>
+                                    <option value="Barangay Captain">Barangay Captain</option>
+                                    <option value="Barangay Kagawad">Barangay Kagawad</option>
+                                    <option value="Barangay Secretary">Barangay Secretary</option>
+                                    <option value="Barangay Treasurer">Barangay Treasurer</option>
+                                    <option value="Barangay Tanod">Barangay Tanod</option>
+                                    <option value="Barangay Chairperson">Barangay Chairperson</option>
+                                    <option value="Barangay SK Chairperson">Barangay SK Chairperson</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label for="office_start_date">Term Start:</label>
+                                <input type="date" class="form-control" name="office_start_date" required>
+                            </div>
+                            <div class="row">
 
-  <script>
-    // Function to upload a new picture
-    function uploadPicture(event) {
-      const file = event.target.files[0];
-      const reader = new FileReader();
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label for="termEnd">Term End:</label>
+                                    <input type="date" class="form-control" name="termEnd" required>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="status">Status:</label>
+                                    <select class="form-control" name="status" required>
+                                        <option value="Active">Active</option>
+                                        <option value="Inactive">Inactive</option>
+                                    </select>
+                                </div>
+                            </div> -->
 
-      reader.onload = function(e) {
-        document.getElementById('profile-picture').src = e.target.result;
-        document.querySelector('.delete-btn').style.display = 'block';
-      };
-
-      if (file) {
-        reader.readAsDataURL(file);
-      }
-    }
-
-    // Function to delete the profile picture
-    function deletePicture() {
-      document.getElementById('profile-picture').src = '';
-      document.querySelector('.delete-btn').style.display = 'none';
-    }
-
-    // Function to delete the entire profile container
-    function deleteProfile() {
-      const profileCard = document.getElementById('profile-card');
-      profileCard.remove(); // Removes the entire profile container from the DOM
-    }
-  </script>
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary">Add Official</button>
+                                <button type="button" class="btn btn-secondary ms-2" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

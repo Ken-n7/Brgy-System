@@ -4,12 +4,12 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 if (isset($_GET['id'])) {
-    require_once 'C:\xampp\htdocs\BRGY SYSTEM\database\Household.php';
-    $householdID = htmlspecialchars($_GET['id']);
-    $households = new Household();
-    $household = $households->getHouseholdID('household_table', $householdID);
+    require_once 'C:\xampp\htdocs\BRGY SYSTEM\database\Official.php';
+    $officialID = htmlspecialchars($_GET['id']);
+    $officials = new Official();
+    $officials = $officials->getOfficialID('official_table', $officialID);
 
-    if (!$household) {
+    if (!$officials) {
         header("Location: http://localhost:3000/home.php?noresident");
         exit;
     }
@@ -19,8 +19,8 @@ if (isset($_GET['id'])) {
         foreach ($_POST as $key => $value) {
             $formData[$key] = htmlspecialchars($value);
         }
-        if (Database::getInstance()->update('household_table', $formData, $householdID, "HouseholdID")) {
-            header("Location: http://localhost:3000/household.php");
+        if (Database::getInstance()->update('official_table', $formData, $officialID, "official_id")) {
+            header("Location: http://localhost:3000/officials.php");
             exit;
         } else {
             header("Location: http://localhost:3000/home.php?failed");
@@ -29,7 +29,6 @@ if (isset($_GET['id'])) {
     }
 } 
 else {
-    header("Location: http://localhost:3000/household.php?notID");
+    header("Location: http://localhost:3000/official.php?notID");
     exit;
 } 
-

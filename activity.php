@@ -86,7 +86,7 @@
 </head>
 <body>
     <?php 
-        include 'C:\xampp\htdocs\BRGY SYSTEM\assets\php\header.html';
+        include 'C:\xampp\htdocs\BRGY SYSTEM\assets\php\header.php';
     ?> 
 
     <div class="container">

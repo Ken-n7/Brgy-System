@@ -7,7 +7,7 @@ require_once 'C:\xampp\htdocs\BRGY SYSTEM\database\Database.php';
 if (isset($_GET['id'])) {
     $id = htmlspecialchars($_GET['id']);
 
-    if (Database::getInstance()->remove('household_table', $id, 'HouseholdID')) {
+    if (Database::getInstance()->remove('household_table', $id, 'Household_id')) {
         echo "Resident deleted successfully.";
         header("Location: http://localhost:3000/household.php"); 
         exit;
