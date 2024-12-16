@@ -40,7 +40,7 @@
 
 }
 .search-button {
-
+    color: gray;
     background: transparent;
     border: none;
     cursor: pointer;

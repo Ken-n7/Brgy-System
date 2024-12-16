@@ -56,6 +56,7 @@ class Resident
 
     private static function isUniqueID(int $id): bool
     {
+        $count = null;
         $connection = Database::getInstance()->getDB_Connection();
         $stmt = $connection->prepare("SELECT COUNT(*) FROM resident_table WHERE resident_id = ?");
         $stmt->bind_param("i", $id);
@@ -63,5 +64,20 @@ class Resident
         $stmt->bind_result($count);
         $stmt->fetch();
         return $count === 0;
+    }
+
+    public function filterByGender($gender)
+    {
+        return array_filter($this->getResidents(), function ($resident) use ($gender) {
+            return $resident['gender'] === $gender;
+        });
+    }
+
+    public function filterByAgeRange($min, $max = null)
+    {
+        return array_filter($this->getResidents(), function ($resident) use ($min, $max) {
+            $age = $resident['age'];
+            return $max ? ($age >= $min && $age <= $max) : ($age >= $min);
+        });
     }
 }

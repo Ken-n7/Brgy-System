@@ -1,53 +1,239 @@
-/* .container {
-    background-color: #e7be08;
-    font-family: "Times New Roman", Times, serif;
-    padding: 30px;
-    border: 1px solid gray;
+/* Modal Styles */
+.modal-content {
     border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-    max-width: 75%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
 }
 
-label {
-    font-weight: bold;
+.modal-header {
+    background-color: #033162;
+    color: white;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 20px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.modal-body {
+    padding: 20px;
+    font-size: 16px;
+}
+
+.modal-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #ddd;
+    text-align: right;
+}
+
+.modal-footer button {
+    font-size: 16px;
+}
+
+.modal-footer .btn-secondary {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+
+.modal-footer .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+/* Custom Styles for the Close Button */
+.modal-header .btn-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: white;
+}
+
+.modal-header .btn-close:hover {
+    color: #f0f0f0;
+    background-color: transparent;
+}
+
+/* Modal Animation */
+.modal.fade .modal-dialog {
+    transform: translate(0, -50%);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+    transform: translate(0, 0);
+}
+
+/* Modal Content Adjustments */
+.modal-lg .modal-content {
+    width: 90%;
+    max-width: 800px;
+}
+
+.modal-dialog {
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+/* Add some padding to the modal input fields */
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Table inside modals */
+.modal-body table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 10px;
 }
 
-input, select {
-    margin-bottom: 15px;
-    text-transform: capitalize;
+.modal-body table th,
+.modal-body table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
 }
 
-.btn {   
-    margin-top: 20px;
+.modal-body table th {
+    background-color: #f7f7f7;
 }
 
-button {
-    margin-top: 0px; 
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #343a40;
-} */
 
 
-/* Make the modal wider on larger screens */
-@media (min-width: 768px) {
-    .modal-dialog.modal-lg {
-        max-width: 900px;
+/* Responsive Modal Adjustments */
+
+/* For screens smaller than 576px */
+@media (max-width: 576px) {
+    .modal-content {
+        width: 100%;
+        border-radius: 0;
+    }
+    .modal-header {
+        font-size: 16px;
+    }
+    .modal-footer {
+        font-size: 14px;
+    }
+    .modal-body {
+        padding: 15px;
+    }
+    .modal-body input,
+    .modal-body select,
+    .modal-body textarea {
+        padding: 8px;
     }
 }
 
-/* Adjust spacing between rows */
-.form-group {
-    margin-bottom: 15px;
+/* For screens between 576px and 768px */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%;
+        max-width: 500px;
+    }
+    .modal-header {
+        font-size: 17px;
+    }
+    .modal-footer {
+        font-size: 15px;
+    }
 }
 
-/* Button styling */
-button {
-    padding: 10px 20px;
-    font-size: 16px;
+/* For screens between 768px and 992px */
+@media (max-width: 992px) {
+    .modal-content {
+        width: 80%;
+        max-width: 600px;
+    }
+    .modal-body input,
+    .modal-body select,
+    .modal-body textarea {
+        padding: 10px;
+    }
+}
+
+/* For screens larger than 992px (larger desktops) */
+@media (min-width: 992px) {
+    .modal-content {
+        width: 70%;
+    }
+}
+
+
+/* Fixing the select elements to match input field size */
+.modal-body select {
+    width: 100%;
+    padding: 8px 12px; /* Adjust padding to match input fields */
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    appearance: none; /* Remove default styles for consistent appearance across browsers */
+    line-height: 1.4; /* Ensures the text is vertically centered */
+    font-size: 14px; /* Smaller text inside the select */
+    height: auto; /* Adjust the height to fit the content properly */
+    box-sizing: border-box; /* Ensure padding and borders are included in the element's total width and height */
+}
+
+/* Fixing for select inside smaller screens (up to 576px) */
+@media (max-width: 576px) {
+    .modal-body select {
+        padding: 7px 10px; /* Reduce padding for smaller screens */
+        font-size: 13px; /* Smaller font size for better readability */
+    }
+}
+
+/* Fixing for select inside screens between 576px and 768px */
+@media (max-width: 768px) {
+    .modal-body select {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+/* Fixing for select inside larger screens */
+@media (min-width: 768px) {
+    .modal-body select {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+
+/* Styling for the modal close button */
+.modal-header .btn-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    border: none;
+    background: none;
+    color: #000; /* Ensure the close button has a contrasting color */
+    font-size: 1.5rem; /* Make the button larger for better visibility */
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 0.7; /* Add hover effect for better user experience */
+}
+
+.modal-header {
+    position: relative; /* Ensures the button stays at the top-right of the modal */
+}
+
+/* Ensure the modal header has enough space for the close button */
+.modal-header .modal-title {
+    margin-right: 50px; /* Make space for the close button */
+}
+
+/* Adjust the close button on mobile screens */
+@media (max-width: 576px) {
+    .modal-header .btn-close {
+        top: 10px; /* Adjust the top positioning on small screens */
+        right: 10px; /* Adjust the right positioning on small screens */
+    }
 }
 

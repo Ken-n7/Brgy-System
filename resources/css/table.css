@@ -1,85 +1,194 @@
+/* General Body Styling */
 body {
-    background-color: #e7be08;
-    /* font-family: "Times New Roman", Times, serif; */
+  background-color: #e7be08;
+  font-family: Arial, sans-serif; /* Changed to a more universally available font */
+  margin: 0;
+  padding: 0;
 }
 
+/* Headers */
 h1 {
-    color: #343a40;
+  color: #343a40;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
+/* Table Container */
 .table-container {
-    max-height: auto; 
-    overflow-x: auto;  
-    overflow-y: auto;
-    border: 1px solid #dee2e6; 
-    padding: 10px; 
-    background-color: #ffffff; 
+  max-height: auto;
+  overflow-x: auto;
+  overflow-y: auto;
+  border: 1px solid #dee2e6;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 10px; /* Added rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Added subtle shadow */
 }
 
+/* Table Styling */
 .table {
-    text-transform: capitalize;
-    width: 100%;
-    white-space: nowrap
+  text-transform: capitalize;
+  width: 100%;
+  white-space: nowrap;
+  border-collapse: collapse; /* Ensure a clean table layout */
 }
 
-.table th, .table td {
-    vertical-align: middle;
-    text-align:center;
+.table th, 
+.table td {
+  vertical-align: middle;
+  text-align: center;
+  padding: 10px; /* Added padding for better readability */
+  border: 1px solid #dee2e6; /* Border for cells */
 }
 
 .table th {
-    background-color: #f2f2f2; 
+  background-color: #f2f2f2;
+  font-weight: bold;
 }
 
-/* Customize dropdown button */
+.table td {
+  background-color: #ffffff;
+}
+
+table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+
+/* Dropdown Customization */
 .dropdown-toggle {
-    background-color: #007bff; /* Blue background */
-    color: white; /* White text */
-    border: none;
-    /* padding: 10px 20px; */
-    border-radius: 5px;
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.dropdown-menu {
+  background-color: #f8f9fa; /* Light background */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  min-width: 120px; /* Slightly wider minimum width */
+}
+
+.dropdown-item {
+  text-align: center;
+  padding: 8px 16px; /* Increased padding for better clickability */
+  color: #343a40; /* Dark text */
+  font-size: 14px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 8px;
+}
+
+#delete {
+  margin-top: 5px;
+}
+
+.dropdown-item:hover {
+  background-color: #007bff; /* Blue on hover */
+  color: white; /* White text on hover */
+}
+
+#delete:hover {
+  background-color: #ff0000; /* Red for delete hover */
+}
+
+.dropdown-item:active {
+  background-color: #0056b3; /* Darker blue when clicked */
+}
+
+/* Gear Icon */
+.dropdown-toggle i {
+  margin-right: 8px;
+}
+
+/* Modal Styling */
+.modal-dialog.modal-lg {
+  max-width: 900px;
+  border-radius: 10px; /* Added rounded corners */
+}
+
+/* Form Adjustments */
+.form-group {
+  margin-bottom: 15px;
+}
+
+/* Buttons */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  h1 {
+      font-size: 24px;
   }
 
-  /* Customize the dropdown menu */
+  button {
+      font-size: 14px;
+      padding: 8px 16px;
+  }
+
   .dropdown-menu {
-    background-color: #f8f9fa; /* Light background */
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    min-width: 100px; /* Set a minimum width */
+      min-width: 100px;
   }
-
-  /* Customize each list item in the dropdown */
-  .dropdown-item {
-    text-align: center;
-    /* padding: 10px 20px; */
-    border-width: 1px;
-    color: #343a40; /* Dark text */
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    border-radius: 8px;
-  }
-
-  #delete{
-    margin-top: 5px;
-  }
-
-  .dropdown-item:hover {
-    background-color: #007bff; /* Blue on hover */
-    color: white; /* White text on hover */
-  }
-
-  #delete:hover{
-    background-color: #ff0000;
-  }
+}
 
 
-  .dropdown-item:active {
-    background-color: #0056b3; /* Darker blue when clicked */
-  }
-
-  /* Customize the gear icon */
-  .dropdown-toggle i {
-    margin-right: 8px;
-  }
-
+.toast-container {
   
+  z-index: 9999; /* Ensures toast is on top of other elements */
+}
+
+.toast {
+  border-radius: 10px; /* Rounded corners for the toast */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for a floating effect */
+}
+
+.toast-header {
+  background-color: #3e8e41; /* Success color background */
+  border-radius: 8px 8px 0 0; /* Rounded top corners */
+}
+
+.toast.bg-success {
+  background-color: #28a745; /* Green for success */
+}
+
+.toast.bg-danger {
+  background-color: #dc3545; /* Red for error */
+}
+
+.toast-body {
+  font-size: 14px; /* Font size for better readability */
+  padding: 10px 15px;
+}
+
+.btn-close-white {
+  filter: invert(1); /* Makes the close button white for better contrast */
+}
+
+.toast-header small {
+  font-size: 12px;
+}
+
+/* Toast animation */
+.toast {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+      opacity: 1;
+  }
+}
